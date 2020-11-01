@@ -1,14 +1,21 @@
 package br.com.restaurante.apirestrestaurante.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "restaurante")
@@ -24,6 +31,10 @@ public class Restaurante implements Serializable {
 	@NotBlank(message = "Nome do restaurante não não pode ser vazio")
 	@Column(name = "nome", length = 255, nullable = false)
 	private String nome;
+
+	@Fetch(FetchMode.SELECT)
+	@OneToMany(mappedBy = "idRestaurante", fetch = FetchType.EAGER)
+	private List<Prato> idPrato = new ArrayList<Prato>();
 
 	public Restaurante() {
 	}

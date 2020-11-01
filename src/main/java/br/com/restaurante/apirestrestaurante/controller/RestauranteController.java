@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class RestauranteController {
 	@GetMapping(value = "list", produces = { "application/json" })
 	public ResponseEntity<List<Restaurante>> findAllRestaurantes() {
 		try {
-			List<Restaurante> list = this.repository.findAll();
+			List<Restaurante> list = this.repository.findAll(Sort.by("nome"));
 			if (list.isEmpty()) {
 				return new ResponseEntity<List<Restaurante>>(HttpStatus.NOT_FOUND);
 			}
